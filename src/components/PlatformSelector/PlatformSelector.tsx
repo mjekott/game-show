@@ -6,10 +6,13 @@ import { Platform } from "../../types/platform";
 
 interface PlatformSelectorProps {
   onSelectPlatform?: (platform: Platform) => void;
-  selectedPlatform?: Platform;
+  selectedPlatform?: Platform | null;
 }
 
-const PlatformSelector: FC<PlatformSelectorProps> = ({ selectedPlatform }) => {
+const PlatformSelector: FC<PlatformSelectorProps> = ({
+  selectedPlatform,
+  onSelectPlatform,
+}) => {
   const getPlatformQuery = useGetPlatforms();
   if (getPlatformQuery.isError) return null;
 
@@ -20,7 +23,12 @@ const PlatformSelector: FC<PlatformSelectorProps> = ({ selectedPlatform }) => {
       </MenuButton>
       <MenuList>
         {getPlatformQuery.data?.data.results.map((platform) => (
-          <MenuItem key={platform.name}>{platform.name}</MenuItem>
+          <MenuItem
+            onClick={() => onSelectPlatform && onSelectPlatform(platform)}
+            key={platform.name}
+          >
+            {platform.name}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>
