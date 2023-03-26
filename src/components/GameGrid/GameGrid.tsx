@@ -12,21 +12,19 @@ interface GameGridProps {
 const GameGrid: FC<GameGridProps> = ({ gameQuery }) => {
   const gamesQuery = useGetGames(gameQuery);
 
+  if (gamesQuery.isError)
+    return <Text>{(gamesQuery.failureReason as any).message}</Text>;
+
   return (
-    <>
-      {gamesQuery.error && (
-        <Text>{(gamesQuery.failureReason as any).message}</Text>
-      )}
-      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={3} px="10">
-        {gamesQuery.isLoading &&
-          new Array(5).fill(0).map((_, idx) => <GameCardSkeleton key={idx} />)}
-        {!!gamesQuery.data?.results.length &&
-          gamesQuery.data?.results.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
-        {gamesQuery.data?.results.length === 0 && <Text>Empty</Text>}
-      </SimpleGrid>
-    </>
+    <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={3} px="10">
+      {gamesQuery.isLoading &&
+        new Array(5).fill(0).map((_, idx) => <GameCardSkeleton key={idx} />)}
+      {!!gamesQuery.data?.results.length &&
+        gamesQuery.data?.results.map((game) => (
+          <GameCard key={game.id} game={game} />
+        ))}
+      {gamesQuery.data?.results.length === 0 && <Text>Empty</Text>}
+    </SimpleGrid>
   );
 };
 
