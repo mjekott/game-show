@@ -1,3 +1,5 @@
+import { Genre } from "./genres";
+
 export interface Game {
   id: number;
   slug: string;
@@ -62,12 +64,4 @@ export interface Rating {
   title: string;
   count: number;
   percent: number;
-}
-
-export interface Genre {
-  id: number;
-  name: string;
-  slug: string;
-  games_count: number;
-  image_background: string;
 }
