@@ -4,18 +4,14 @@ import { GameGrid } from "./components/GameGrid";
 import GenreList from "./components/GenreList/GenreList";
 import { NavBar } from "./components/NavBar";
 import PlatformSelector from "./components/PlatformSelector/PlatformSelector";
-import { Genre } from "./types/genres";
-import { Platform } from "./types/platform";
-
-interface GamesQuery {
-  genre: Genre | null;
-  platform: Platform | null;
-}
+import SortSelector from "./components/SortSelector/SortSelector";
+import { GamesQuery } from "./types/games";
 
 function App() {
   const [gameQuery, setGameQuery] = useState<GamesQuery>({
     genre: null,
     platform: null,
+    sortOrder: null,
   });
 
   return (
@@ -40,11 +36,17 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main">
-        <Flex alignItems="center" py="3" px="10">
+        <Flex alignItems="center" py="3" px="10" gap="3">
           <PlatformSelector
             selectedPlatform={gameQuery.platform}
             onSelectPlatform={(platform) => {
               setGameQuery((prev) => ({ ...prev, platform }));
+            }}
+          />
+          <SortSelector
+            selectedSort={gameQuery.sortOrder}
+            onSelectSort={(sortOrder) => {
+              setGameQuery((prev) => ({ ...prev, sortOrder }));
             }}
           />
         </Flex>

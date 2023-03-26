@@ -10,7 +10,12 @@ interface GetGamesResponse {
 
 const useGetGames = (gameQuery: GamesQuery) => {
   return useQuery({
-    queryKey: ["games", gameQuery.genre?.id, gameQuery.platform?.id],
+    queryKey: [
+      "games",
+      gameQuery.genre?.id,
+      gameQuery.platform?.id,
+      gameQuery.sortOrder,
+    ],
     queryFn: async ({ signal }) => {
       try {
         const response = await axiosClient.get<GetGamesResponse>("/games", {
@@ -20,6 +25,7 @@ const useGetGames = (gameQuery: GamesQuery) => {
             ...(gameQuery.platform
               ? { parent_platforms: gameQuery.platform.id }
               : {}),
+            ...(gameQuery.sortOrder ? { ordering: gameQuery.sortOrder } : {}),
           },
         });
         return response.data;
