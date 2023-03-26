@@ -1,4 +1,5 @@
 import { Genre } from "./genres";
+import { Platform } from "./platform";
 
 export interface Game {
   id: number;
@@ -46,12 +47,6 @@ interface PlatformPlatform {
   year_start: number | null;
   games_count: number;
   image_background: string;
-}
-
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
 }
 
 export interface Requirements {
