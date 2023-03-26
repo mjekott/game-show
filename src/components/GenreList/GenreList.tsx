@@ -51,7 +51,7 @@ const GenreList: FC<GenreListProps> = ({ onSelectedGenre }) => {
                 variant="link"
                 onClick={() => onSelectedGenre && onSelectedGenre(genre)}
               >
-                <Text> {genre.name}</Text>
+                <Text isTruncated>{genre.name}</Text>
               </Button>
             </HStack>
           </ListItem>
