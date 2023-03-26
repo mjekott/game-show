@@ -1,10 +1,18 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
+import { FC } from "react";
 import useGetGames from "../../services/api/api-hooks/games/useGetGames";
+import { Genre } from "../../types/genres";
 import { GameCard } from "./GameCard";
 import GameCardSkeleton from "./GameCard/GameCardSkeleton";
 
-const GameGrid = () => {
-  const gamesQuery = useGetGames();
+interface GameGridProps {
+  selectedGenre: Genre | null;
+}
+
+const GameGrid: FC<GameGridProps> = ({ selectedGenre }) => {
+  const gamesQuery = useGetGames({
+    genre: selectedGenre?.id ? String(selectedGenre.id) : "",
+  });
   const skeletons = new Array(5).fill(0);
 
   return (

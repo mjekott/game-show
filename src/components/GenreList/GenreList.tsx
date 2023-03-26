@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   HStack,
   Image,
   List,
@@ -7,10 +8,16 @@ import {
   Skeleton,
   Text,
 } from "@chakra-ui/react";
+import { FC } from "react";
 import useGetGenres from "../../services/api/api-hooks/games/useGetGenres";
+import { Genre } from "../../types/genres";
 import getCroppedImageUrl from "../../utils/image-url";
 
-const GenreList = () => {
+interface GenreListProps {
+  onSelectedGenre?: (genre: Genre) => void;
+}
+
+const GenreList: FC<GenreListProps> = ({ onSelectedGenre }) => {
   const genreQuery = useGetGenres();
 
   if (genreQuery.isError) return null;
@@ -40,7 +47,12 @@ const GenreList = () => {
                 src={getCroppedImageUrl(genre.image_background)}
                 alt={genre.name}
               />
-              <Text>{genre.name}</Text>
+              <Button
+                variant="link"
+                onClick={() => onSelectedGenre && onSelectedGenre(genre)}
+              >
+                <Text> {genre.name}</Text>
+              </Button>
             </HStack>
           </ListItem>
         ))}

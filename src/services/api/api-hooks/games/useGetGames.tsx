@@ -8,13 +8,16 @@ interface GetGamesResponse {
   results: Game[];
 }
 
-const useGetGames = () => {
+const useGetGames = ({ genre = "" }: { genre?: string }) => {
   return useQuery({
-    queryKey: ["games"],
+    queryKey: ["games", genre],
     queryFn: async ({ signal }) => {
       try {
         const response = await axiosClient.get<GetGamesResponse>("/games", {
           signal,
+          params: {
+            ...(genre ? { genres: genre } : {}),
+          },
         });
         return response.data;
       } catch (error) {
