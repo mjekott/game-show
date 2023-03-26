@@ -24,7 +24,7 @@ const GenreList: FC<GenreListProps> = ({ onSelectedGenre }) => {
 
   return (
     <Box>
-      <Text fontSize="xl" fontWeight="semibold" mb="3">
+      <Text fontSize="2xl" fontWeight="semibold" mb="3">
         Genres
       </Text>
       <List spacing="1">
@@ -44,14 +44,18 @@ const GenreList: FC<GenreListProps> = ({ onSelectedGenre }) => {
                 w="8"
                 h="8"
                 rounded="lg"
+                objectFit="cover"
                 src={getCroppedImageUrl(genre.image_background)}
                 alt={genre.name}
               />
               <Button
                 variant="link"
                 onClick={() => onSelectedGenre && onSelectedGenre(genre)}
+                whiteSpace="normal"
+                textAlign="left"
+                fontSize="sm"
               >
-                <Text isTruncated>{genre.name}</Text>
+                {genre.name}
               </Button>
             </HStack>
           </ListItem>
