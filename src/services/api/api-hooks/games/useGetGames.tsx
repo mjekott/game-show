@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { CanceledError } from "axios";
-import { Game } from "../../../../types/games";
+import { Game, GamesQuery } from "../../../../types/games";
 import axiosClient from "../../api-client";
 
 interface GetGamesResponse {
@@ -8,22 +8,18 @@ interface GetGamesResponse {
   results: Game[];
 }
 
-const useGetGames = ({
-  genres = "",
-  platforms = "",
-}: {
-  genres?: string;
-  platforms?: string;
-}) => {
+const useGetGames = (gameQuery: GamesQuery) => {
   return useQuery({
-    queryKey: ["games", genres, platforms],
+    queryKey: ["games", gameQuery.genre?.id, gameQuery.platform?.id],
     queryFn: async ({ signal }) => {
       try {
         const response = await axiosClient.get<GetGamesResponse>("/games", {
           signal,
           params: {
-            ...(genres ? { genres } : {}),
-            ...(platforms ? { parent_platforms: platforms } : {}),
+            ...(gameQuery.genre ? { genres: gameQuery.genre.id } : {}),
+            ...(gameQuery.platform
+              ? { parent_platforms: gameQuery.platform.id }
+              : {}),
           },
         });
         return response.data;

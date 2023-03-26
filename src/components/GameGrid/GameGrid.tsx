@@ -1,22 +1,16 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
 import { FC } from "react";
 import useGetGames from "../../services/api/api-hooks/games/useGetGames";
-import { Genre } from "../../types/genres";
-import { Platform } from "../../types/platform";
+import { GamesQuery } from "../../types/games";
 import { GameCard } from "./GameCard";
 import GameCardSkeleton from "./GameCard/GameCardSkeleton";
 
 interface GameGridProps {
-  selectedGenre: Genre | null;
-  selectedPlatform: Platform | null;
+  gameQuery: GamesQuery;
 }
 
-const GameGrid: FC<GameGridProps> = ({ selectedGenre, selectedPlatform }) => {
-  const gamesQuery = useGetGames({
-    genres: selectedGenre?.id ? String(selectedGenre.id) : "",
-    platforms: selectedPlatform?.id ? String(selectedPlatform.id) : "",
-  });
-  const skeletons = new Array(5).fill(0);
+const GameGrid: FC<GameGridProps> = ({ gameQuery }) => {
+  const gamesQuery = useGetGames(gameQuery);
 
   return (
     <>
@@ -25,7 +19,7 @@ const GameGrid: FC<GameGridProps> = ({ selectedGenre, selectedPlatform }) => {
       )}
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} gap={3} px="10">
         {gamesQuery.isLoading &&
-          skeletons.map((_, idx) => <GameCardSkeleton key={idx} />)}
+          new Array(5).fill(0).map((_, idx) => <GameCardSkeleton key={idx} />)}
         {!!gamesQuery.data?.results.length &&
           gamesQuery.data?.results.map((game) => (
             <GameCard key={game.id} game={game} />

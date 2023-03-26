@@ -60,3 +60,8 @@ export interface Rating {
   count: number;
   percent: number;
 }
+
+export interface GamesQuery {
+  genre: Genre | null;
+  platform: Platform | null;
+}
