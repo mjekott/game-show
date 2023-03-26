@@ -15,6 +15,7 @@ const useGetGames = (gameQuery: GamesQuery) => {
       gameQuery.genre?.id,
       gameQuery.platform?.id,
       gameQuery.sortOrder,
+      gameQuery.searchText,
     ],
     queryFn: async ({ signal }) => {
       try {
@@ -26,6 +27,9 @@ const useGetGames = (gameQuery: GamesQuery) => {
               ? { parent_platforms: gameQuery.platform.id }
               : {}),
             ...(gameQuery.sortOrder ? { ordering: gameQuery.sortOrder } : {}),
+            ...(!!gameQuery.searchText.length
+              ? { search: gameQuery.searchText }
+              : {}),
           },
         });
         return response.data;

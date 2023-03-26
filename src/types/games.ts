@@ -65,4 +65,5 @@ export interface GamesQuery {
   genre: Genre | null;
   platform: Platform | null;
   sortOrder: string | null;
+  searchText: string;
 }

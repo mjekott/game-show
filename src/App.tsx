@@ -12,6 +12,7 @@ function App() {
     genre: null,
     platform: null,
     sortOrder: null,
+    searchText: "",
   });
 
   return (
@@ -24,7 +25,11 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar
+          onSearchText={(searchText) => {
+            setGameQuery((prev) => ({ ...prev, searchText }));
+          }}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" pl="10">

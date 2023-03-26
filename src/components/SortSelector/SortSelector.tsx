@@ -25,7 +25,7 @@ const SortSelector: FC<SortSelectorProps> = ({
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
-        Order by: {currentSort?.label}
+        Order by: {currentSort?.label || "Relevance"}
       </MenuButton>
       <MenuList>
         {sortOrders.map((order) => (
